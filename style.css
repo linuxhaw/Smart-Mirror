@@ -1,0 +1,57 @@
+div.st-emotion-cache-ocqkz7.e1f1d6gn5 {
+  padding: 40px 60px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  gap: 1em;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  border: 1.7px solid #727272;
+}
+
+button.st-emotion-cache-i723qo.ef3psqc12 {
+  border-radius: 0.2em;
+  padding: 0.25em 0.75em;
+  font-size: 5em;
+}
+
+div.st-emotion-cache-6qob1r.eczjsme3 {
+  background-color: #f3f3f3;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  color: #3e3e3e;
+  text-transform: uppercase;
+}
+
+h2 {
+  color: #3e3e3e;
+}
+
+span.st-emotion-cache-1dj0hjr.eczjsme5 {
+  color: #3e3e3e;
+}
+
+span.st-emotion-cache-1m6wrpk.eczjsme5 {
+  color: #3e3e3e;
+}
+
+.stButton > button {
+  color: white; /* Text color */
+  border: 1px solid #f3f3f3;
+  padding: 20px 40px; /* Padding */
+  text-align: center; /* Text alignment */
+  text-decoration: none; /* No underline */
+  display: inline-block; /* Inline block display */
+  font-size: 16px; /* Font size */
+  margin: 4px 2px; /* Margin */
+  cursor: pointer; /* Cursor on hover */
+  border-radius: 8px; /* Rounded corners */
+  transition: background-color 0.3s; /* Smooth transition */
+}
+
+/* .stButton > button:hover {
+  background-color: #c70039; 
+  color: #f3f3f3;
+} */
