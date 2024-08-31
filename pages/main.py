@@ -30,7 +30,7 @@ selected_event = st.selectbox("Select Event:", events)
 
 # Style selection
 style = ["Top and Skirt", "Dress", "Shirt and pants", "Blouse and skirt", "Cardigan and pants" ,"Jacket and pants"]
-selected_style = st.selectbox("Select Style:", style)
+selected_style = st.multiselect("Select Style:", style)
 
 # Define paths to your image folders
 base_path = "./Dataset"  # Adjust this path to your base image directory
