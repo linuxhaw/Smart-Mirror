@@ -8,33 +8,14 @@ st.set_page_config(
     layout="wide")
 
 st.title("Smart-Mirror AI :mirror:")
-st.title("Outfit Recommendation CV")
-
-# st.page_link("./pages/main.py", label="Start", icon="1️⃣")
-
-# st.link_button("Get Started", "http://localhost:8501/main")
+st.subheader("Female Outfit Recommendation CV Project :dress:")
 
 
-button_html = """
-    <a href="/main">
-        <button style="
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 16px 2px;
-            cursor: pointer;
-            border-radius: 8px;
-        ">Get Started</button>
-    </a>
-"""
+# # Display the button using markdown
+# st.markdown(button_html, unsafe_allow_html=True)
 
-# Display the button using markdown
-st.markdown(button_html, unsafe_allow_html=True)
+if st.button("Try Now"):
+    st.write('<meta http-equiv="refresh" content="0; URL=http://localhost:8501/main">', unsafe_allow_html=True)
 
 hide_sidebar_style = """
     <style>
