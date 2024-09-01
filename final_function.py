@@ -1,4 +1,3 @@
-import google.generativeai as genai
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -6,9 +5,9 @@ from langchain_core.output_parsers import StrOutputParser
 import os
 import requests
 
-GOOGLE_API_KEY = "AIzaSyAPemI2H57SQCuw_LjN4yGba0dE_JAwC3g"
+GOOGLE_API_KEY = "AIzaSyA7EEyiQMjv-7Shi6tYu60BmEfG5zdg2uA"
 
-os.environ["GOOGLE_API_KEY"] = "AIzaSyAPemI2H57SQCuw_LjN4yGba0dE_JAwC3g"
+os.environ["GOOGLE_API_KEY"] = "AIzaSyA7EEyiQMjv-7Shi6tYu60BmEfG5zdg2uA"
 
 API_URL = "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-large"
 headers = {"Authorization": "Bearer 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"}
@@ -19,19 +18,24 @@ def query(filename):
     response = requests.post(API_URL, headers=headers, data=data)
     return response.json()
 
-folder_path = "Dataset/Dress"
+# folder_path = "new_test"
 # results = {}
 
 
-def recommender(folder_path):
+def recommender(folder_path, age, event, style):
     results = {}
 
-    for image in os.listdir(folder_path):
-        image_path = os.path.join(folder_path, image)
+    for category, images in folder_path.items():
+        for image_path in images:
+            # Perform your processing/query for each selected image
+            response = query(image_path)
 
-        response = query(image_path)
+    # for image in os.listdir(folder_path):
+        # image_path = os.path.join(folder_path, image)
 
-        results[image_path] = response[0]['generated_text']
+            response = query(image_path)
+
+            results[image_path] = response[0]['generated_text']
 
     llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0.5, max_tokens=None, timeout=None, max_retries=2)
 
@@ -89,6 +93,8 @@ def recommender(folder_path):
                 Please just give only file paths. Do not give any additional text responses.
 
                 Please do not give two outfit from same category. For example, two pants, two topwears.
+
+                Please give an output with same as example format. There should be "," between file paths.
                 """
             ),
             MessagesPlaceholder(variable_name="descriptions"),
@@ -99,8 +105,8 @@ def recommender(folder_path):
 
     descriptions = formatted_descriptions
 
-    Age = 24
-    user_input = "I will go to my friend's wedding. I want to wear pink dress"
+    Age = age
+    user_input = "I will go to {event}. I want to wear {style}".format(event=event, style=style)
 
     chain = prompt | llm | StrOutputParser()
 
@@ -116,8 +122,8 @@ def recommender(folder_path):
     return response
         
 
-for i in recommender(folder_path).split(","):
-    print(i)
+# for i in recommender(folder_path, 24, "wedding", "top and skirt").split(","):
+#     print(i)
 
 
 

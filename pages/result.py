@@ -1,4 +1,8 @@
 import streamlit as st
+from final_function import recommender
+from pages.main import user_selection
+
+result_path = []
 
 # Set page configuration
 st.set_page_config(page_title="Results - Outfit Recommendation", page_icon=":tada:", layout="wide")
@@ -15,26 +19,39 @@ if "selected_age" in st.session_state and st.session_state["selected_age"] is no
     user_selection = st.session_state["user_selection"]
 
     # Display the selected age and event
-    st.title("Recommended Outfits")
-    st.write(f"### Age Range: {selected_age}")
-    st.write(f"### Event: {selected_event}")
-    st.write(f"### Style: {selected_style}")
+    st.title("AI Recommended Outfits")
+    st.subheader(f"### This outfit is suitable for {selected_event} betwwen age {selected_age}")
+    # st.write(f"### Age Range: {selected_age}")
+    # st.write(f"### Event: {selected_event}")
+    # st.write(f"### Style: {selected_style}")
+
+    def display_result_images(path):
+        # for image in path:
+            st.image(path)
+
+    for i in recommender(user_selection, selected_age, selected_event, selected_style).split(","):
+        display_result_images(i.strip())
+        print(i)
+        
+    
+    # for images in result_path:
+    #     display_result_images(images)
 
     # Function to display selected images in a grid format
-    def display_selected_images(category, images):
-        st.write(f"### {category}")
-        cols = st.columns(6)
-        for idx, image in enumerate(images):
-            with cols[idx % 6]:  # Distribute images across columns
-                st.image(image, use_column_width=True)  # Display image
+    # def display_selected_images(category, images):
+    #     st.write(f"### {category}")
+    #     cols = st.columns(6)
+    #     for idx, image in enumerate(images):
+    #         with cols[idx % 6]:  # Distribute images across columns
+    #             st.image(image, use_column_width=True)  # Display image
 
-    # Display selected images for each category
-    for category, images in user_selection.items():
-        if images:  # Only display if there are selected images
-            display_selected_images(category, images)
+    # # Display selected images for each category
+    # for category, images in user_selection.items():
+    #     if images:  # Only display if there are selected images
+    #         display_selected_images(category, images)
 
-else:
-    st.write("No data available. Please go back to the selection page.")
+# else:
+#     st.write("No data available. Please go back to the selection page.")
 
 # Button to go back to the main page
 if st.button("Back to Selection"):
