@@ -51,7 +51,34 @@ span.st-emotion-cache-1m6wrpk.eczjsme5 {
   transition: background-color 0.3s; /* Smooth transition */
 }
 
-/* .stButton > button:hover {
-  background-color: #c70039; 
-  color: #f3f3f3;
+.st-emotion-cache-s08jb3.ef3psqc12 {
+  padding: 18px 40px;
+  border: 1px solid #ffa4eb;
+  /* background-color: #ffa4eb; */
+}
+
+.st-emotion-cache-1ecwoph p {
+  color: #ffa4eb;
+}
+
+.st-emotion-cache-s08jb3.ef3psqc12 :hover {
+  box-shadow: #ffa4eb;
+  color: #fff;
+  border: 1px solid none;
+  text-shadow: #fff;
+}
+
+/* a.st-emotion-cache-dyt684.e11k5jya1 {
+  color: #ffa4eb;
 } */
+
+/* .st-emotion-cache-3ps0xc.e1nzilvr5 p {
+  color: #ffa4eb;
+} */
+
+.st-emotion-cache-dyt684.e11k5jya1 p {
+  color: #ffa4eb;
+  border: 1px solid #ffa4eb;
+  padding: 5px 10px;
+  border-radius: 10px;
+}

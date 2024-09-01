@@ -10,16 +10,13 @@ GOOGLE_API_KEY = "AIzaSyA7EEyiQMjv-7Shi6tYu60BmEfG5zdg2uA"
 os.environ["GOOGLE_API_KEY"] = "AIzaSyA7EEyiQMjv-7Shi6tYu60BmEfG5zdg2uA"
 
 API_URL = "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-large"
-headers = {"Authorization": "Bearer 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"}
+headers = {"Authorization": "Bearer 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"}
 
 def query(filename):
     with open(filename, "rb") as f:
         data = f.read()
     response = requests.post(API_URL, headers=headers, data=data)
     return response.json()
-
-# folder_path = "new_test"
-# results = {}
 
 
 def recommender(folder_path, age, event, style):
@@ -29,13 +26,20 @@ def recommender(folder_path, age, event, style):
         for image_path in images:
             # Perform your processing/query for each selected image
             response = query(image_path)
+            if isinstance(response, list) and len(response) > 0 and 'generated_text' in response[0]:
+                results[image_path] = response[0]['generated_text']
+            else:
+                results[image_path] = "Error or no valid response"
 
-    # for image in os.listdir(folder_path):
-        # image_path = os.path.join(folder_path, image)
+    # Return a list of paths and descriptions separately
+    image_paths = list(results.keys())
+    descriptions = list(results.values())
 
-            response = query(image_path)
+    # Print to debug
+    print("Image Paths:", image_paths)
+    print("Descriptions:", descriptions)
 
-            results[image_path] = response[0]['generated_text']
+    return image_paths, descriptions
 
     llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0.5, max_tokens=None, timeout=None, max_retries=2)
 
@@ -44,6 +48,8 @@ def recommender(folder_path, age, event, style):
 
     descriptions_with_paths = [f"{desc} [Path: {path}]" for desc, path in zip(descriptions_list, file_paths)]
     formatted_descriptions = "\n".join(descriptions_with_paths)
+    
+    return formatted_descriptions
 
     prompt = ChatPromptTemplate.from_messages(
         [
@@ -120,17 +126,5 @@ def recommender(folder_path, age, event, style):
 
 
     return response
-        
-
-# for i in recommender(folder_path, 24, "wedding", "top and skirt").split(","):
-#     print(i)
-
-
-
-
-
-
-
-
 
 

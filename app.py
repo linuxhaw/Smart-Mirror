@@ -5,29 +5,28 @@ import os
 st.set_page_config(
     page_title="Smart Mirror",
     page_icon=":tada:",
-    layout="wide")
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
+with open('style.css') as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 st.title("Smart-Mirror AI :mirror:")
-st.subheader("Female Outfit Recommendation CV Project :dress:")
+st.subheader("Female Outfit Recommendation CV Project")
+# st.code ("To create a smart mirror that provides personalized outfit recommendations to women based on their preferences and purposes.")
+st.markdown("To create a smart mirror that provides personalized outfit recommendations to women based on their preferences and purposes.:sparkles:")
 
 
-# # Display the button using markdown
-# st.markdown(button_html, unsafe_allow_html=True)
-
-if st.button("Try Now"):
+if st.button("Try Beta Version"):
     st.write('<meta http-equiv="refresh" content="0; URL=http://localhost:8501/main">', unsafe_allow_html=True)
 
-hide_sidebar_style = """
-    <style>
-        [data-testid="stSidebar"] {
-            display: none;  /* Hide the sidebar */
-        }
-        [data-testid="stSidebarNav"] {
-            display: none;  /* Hide the sidebar navigation */
-        }
-        .css-qrbaxs {
-            margin-left: 0rem;  /* Adjust the main content margin */
-        }
-    </style>
-"""
-st.markdown(hide_sidebar_style, unsafe_allow_html=True)
+st.markdown(
+    """
+<style>
+    [data-testid="collapsedControl"] {
+        display: none
+    }
+</style>
+""",
+    unsafe_allow_html=True,
+)

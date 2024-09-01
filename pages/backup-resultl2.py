@@ -1,12 +1,30 @@
 import streamlit as st
 from final_function import recommender
-from pages.main import user_selection
+from rembg import remove
+from PIL import Image
+import io
 
 # Set page configuration
-st.set_page_config(page_title="Results - Outfit Recommendation", page_icon=":tada:", layout="wide")
+st.set_page_config(
+    page_title="Smart Mirror",
+    page_icon=":tada:",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 
+# Load and apply custom CSS
 with open('style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+@st.cache_data  # Cache image processing to speed up reloading
+def process_image(path):
+    with open(path, "rb") as image_file:
+        image = Image.open(image_file).convert("RGBA")
+        # Resize the image to speed up processing
+        image.thumbnail((800, 800))  # Adjust size as needed
+        # Remove background
+        image_no_bg = remove(image)
+        return image_no_bg
 
 # Check if the session state contains the required data
 if "selected_age" in st.session_state and st.session_state["selected_age"] is not None:
@@ -17,12 +35,13 @@ if "selected_age" in st.session_state and st.session_state["selected_age"] is no
     user_selection = st.session_state["user_selection"]
 
     # Display the selected age and event
-    st.title("AI Recommended Outfits")
-    st.subheader(f"This outfit is suitable for {selected_event} between age {selected_age}")
+    st.title("AI Generated Recommend Outfits :magic_wand: :sparkles:")
+    st.subheader(f"This outfit is suitable for {selected_event} between age {selected_age}.")
 
     def display_result_images(path):
-        # Display the image at the given path
-        st.image(path)
+        # Process image and display
+        image_no_bg = process_image(path)
+        st.image(image_no_bg)
 
     # Call the recommender function and get the paths and descriptions
     recommender_output = recommender(user_selection, selected_age, selected_event, selected_style)
@@ -42,17 +61,14 @@ if "selected_age" in st.session_state and st.session_state["selected_age"] is no
 if st.button("Back to Selection"):
     st.write('<meta http-equiv="refresh" content="0; URL=http://localhost:8501/main">', unsafe_allow_html=True)
 
-hide_sidebar_style = """
-    <style>
-        [data-testid="stSidebar"] {
-            display: none;  /* Hide the sidebar */
-        }
-        [data-testid="stSidebarNav"] {
-            display: none;  /* Hide the sidebar navigation */
-        }
-        .css-qrbaxs {
-            margin-left: 0rem;  /* Adjust the main content margin */
-        }
-    </style>
-"""
-st.markdown(hide_sidebar_style, unsafe_allow_html=True)
+# Hide sidebar control (not applicable for this script as sidebar is collapsed by default)
+st.markdown(
+    """
+<style>
+    [data-testid="collapsedControl"] {
+        display: none;
+    }
+</style>
+""",
+    unsafe_allow_html=True,
+)

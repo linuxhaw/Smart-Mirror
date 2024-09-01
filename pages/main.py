@@ -4,7 +4,8 @@ import os
 st.set_page_config(
     page_title="Smart Mirror",
     page_icon=":tada:",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="collapsed"
 )
 
 with open('style.css') as f:
